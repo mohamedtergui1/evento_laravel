@@ -16,7 +16,11 @@ class Event extends Model
         'category_id',
         'organizer_id',
         'status',
-        'autoAkcept'
+        'price',
+        'location',
+        'autoAccept',
+        'capacity',
+        'rest_places'
     ];
     function category()
     {

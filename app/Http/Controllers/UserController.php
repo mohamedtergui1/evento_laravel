@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepositoryInterface;
-use Illuminate\Http\Request;
+
+
 
 class UserController extends Controller
 {
@@ -19,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->paginate(10);
-       return view("admin.users.index",compact("users"));
+        return view("admin.users.index",compact("users"));
     }
 
     /**
@@ -33,9 +35,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        dd($request->all());
+        $user = $this->userRepository->create($request->all());
+
+       return  redirect(route("users.index"))->with("success","user created successfuly");
     }
 
     /**
@@ -57,7 +62,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
         //
     }
@@ -65,7 +70,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         //
     }

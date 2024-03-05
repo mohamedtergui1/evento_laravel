@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventRequest;
 use App\Models\Event;
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Repositories\EventRepositoryInterface;
+
 
 class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $eventRepository;
+
+    public function __construct(EventRepositoryInterface $eventRepository)
+    {
+        $this->eventRepository = $eventRepository;
+    }
     public function index()
     {
-        //
+        $events = $this->eventRepository->paginate(10);
+        $categories =  Category::All();
+        return view("events.index",compact("events","categories"));
     }
 
     /**
@@ -26,33 +37,58 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EventRequest $request)
     {
         //
+
+        $all =$request->all()+["organizer_id"=>auth()->user()->id];
+        $event = $this->eventRepository->create($all);
+        return  redirect()->route("events.index")->with("success","event created successfuly");
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(int $id)
     {
         //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit(int $id)
     {
         //
+
+        $event = $this->eventRepository->getById($id);
+        $categories =  Category::All();
+        return view("events.edit",compact("event","categories"));
+
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(EventRequest $request, Event $event)
     {
         //
+
+        if($request->autoAccept){
+        $event = $this->eventRepository->update($event,$request->all());
+
+
+
+        }else{
+        $all =$request->all()+["autoAccept" => 0  ];
+        $event = $this->eventRepository->update($event,$all);
+
+        }
+        return  redirect()->route("events.index")->with("success","event updated successfuly");
+
     }
 
     /**
@@ -61,5 +97,8 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+        $this->eventRepository->delete($event);
+        return redirect()->route("events.index")->with("success","event deletes with success");
+
     }
 }

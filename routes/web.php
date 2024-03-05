@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
+use App\Models\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +20,9 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $categories = Category::all();
+    $events = Event::where("status","accepted");
+    return view('welcome',compact("events","categories"));
 });
 
 Route::get('/dashboard', function () {
@@ -41,6 +46,7 @@ Route::get("/callback/{provider}", [SocialiteController::class,"callback"])->nam
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resources(['users' => UserController::class]);
+    Route::resources(['events' => EventController::class]);
 });
 
 

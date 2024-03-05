@@ -20,7 +20,10 @@ return new class extends Migration {
             $table->dateTime("date");
             $table->string("location", 255);
             $table->float("price");
+            $table->enum("status",["accepted","rejected","pending"])->default("pending");
+            $table->boolean("autoAccept")->default(false);
             $table->foreignId("organizer_id")->constrained("users");
+            $table->foreignId("category_id")->constrained("categories");
             $table->timestamps();
         });
     }
