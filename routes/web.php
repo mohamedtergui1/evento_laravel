@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
@@ -21,7 +23,8 @@ use App\Models\Event;
 
 Route::get('/', function () {
     $categories = Category::all();
-    $events = Event::where("status","accepted");
+    $events = Event::where("status","accepted")->paginate(10);
+
     return view('welcome',compact("events","categories"));
 });
 
@@ -29,9 +32,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
 });
 
 # Socialite URLs
@@ -47,8 +52,9 @@ Route::get("/callback/{provider}", [SocialiteController::class,"callback"])->nam
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resources(['users' => UserController::class]);
     Route::resources(['events' => EventController::class]);
+    Route::resources(['categories' => CategoryController::class]);
 });
 
-
+Route::get("/search",[SearchController::class,"search"]);
 
 require __DIR__.'/auth.php';

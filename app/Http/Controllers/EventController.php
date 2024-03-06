@@ -13,7 +13,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    protected $eventRepository;
+    private $eventRepository;
 
     public function __construct(EventRepositoryInterface $eventRepository)
     {
@@ -23,7 +23,7 @@ class EventController extends Controller
     {
         $events = $this->eventRepository->paginate(10);
         $categories =  Category::All();
-        return view("events.index",compact("events","categories"));
+        return view("admin.events.index",compact("events","categories"));
     }
 
     /**
@@ -65,7 +65,7 @@ class EventController extends Controller
 
         $event = $this->eventRepository->getById($id);
         $categories =  Category::All();
-        return view("events.edit",compact("event","categories"));
+        return view("admin.events.edit",compact("event","categories"));
 
 
     }

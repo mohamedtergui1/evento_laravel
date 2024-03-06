@@ -1,40 +1,52 @@
 <x-guest-layout>
     <x-search :categories="$categories" />
-    <div class="p-1 flex flex-wrap items-center justify-start">
+    <div id="place_result" class=" py-10 flex flex-wrap items-center justify-start">
 
 
+        @foreach ($events as $event)
+            <div
+                class="bg-white shadow-[0_8px_12px_-6px_rgba(0,0,0,0.2)] border p-2 w-full max-w-sm rounded-lg font-[sans-serif] overflow-hidden mx-auto mt-4">
+                <img src="https://readymadeui.com/cardImg.webp" class="w-full rounded-lg" />
+                <div class="px-4 my-6 text-center">
+                    <h3 class="text-lg font-semibold">{{ $event->title }}</h3>
+                    <p class="mt-2 text-sm text-gray-400">{{ $event->description }}</p>
 
-
-
-
-    @foreach ($events as $event)
-        <div class="flex-shrink-0 m-6 relative overflow-hidden bg-orange-500 rounded-lg max-w-xs shadow-lg group">
-                    <svg class="absolute bottom-0 left-0 mb-8 scale-150 group-hover:scale-[1.65] transition-transform"
-                        viewBox="0 0 375 283" fill="none" style="opacity: 0.1;">
-                        <rect x="159.52" y="175" width="152" height="152" rx="8"
-                            transform="rotate(-45 159.52 175)" fill="white" />
-                        <rect y="107.48" width="152" height="152" rx="8" transform="rotate(-45 0 107.48)"
-                            fill="white" />
-                    </svg>
-                    <div
-                        class="relative pt-10 px-10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <div class="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"
-                            style="background: radial-gradient(black, transparent 60%); transform: rotate3d(0, 0, 1, 20deg) scale3d(1, 0.6, 1); opacity: 0.2;">
-                        </div>
-                        <img class="relative w-40"
-                            src="https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png"
-                            alt="">
-                    </div>
-                    <div class="relative text-white px-6 pb-6 mt-6">
-                        <span class="block opacity-75 -mb-1">Outdoor</span>
-                        <div class="flex justify-between">
-                            <span class="block font-semibold text-xl">Oak Tree</span>
-                            <span
-                                class="block bg-white rounded-full text-purple-500 text-xs font-bold px-3 py-2 leading-none flex items-center">$68.50</span>
-                        </div>
-                    </div>
                 </div>
-    @endforeach
+                <div class="flex justify-between  items-center ">
+                    <span>{{ substr($event->date, 0, 16) }}</span> <span
+                        class="px-2 py-1 border rounded-sm">{{ $event->category->name }}</span>
+                </div>
+                <div class="space-x-10 flex items-center justify-end  pt-4 ">
+                    <span>{{ $event->user->name }}</span>
+                    <div class="relative  ">
+                        <img src="https://readymadeui.com/team-6.webp" class="w-14 h-14 rounded-full" />
+                        <span
+                            class="h-3 w-3 rounded-full border border-white bg-green-500 block absolute bottom-1 right-0"></span>
+                    </div>
 
+
+                </div>
+                <div class="mt-4 flex items-center flex-wrap gap-4">
+                    <h3 class="text-xl text-[#333] font-bold flex-1">$ {{ $event->price }}</h3>
+                    <button type="button"
+                        class="px-6 py-2.5 rounded text-[#333] text-sm tracking-wider font-semibold border-2 border-[#333] hover:bg-gray-50 outline-none">Order
+                        now</button>
+                </div>
+
+                <button type="button"
+                    class="px-6 py-2 w-full mt-4 rounded-lg text-white text-sm tracking-wider font-semibold border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">View</button>
+            </div>
+        @endforeach
+        @if (count($events) == 0)
+            <div class="flex p-5 pb-10 justify-end">
+                <p class=" text-red-700 text-center text-3xl ">
+                    its empty
+                </p>
+            </div>
+        @else
+            <div class="flex p-5 pb-10 justify-end">
+                {{ $events->links() }}
+            </div>
+        @endif
     </div>
 </x-guest-layout>

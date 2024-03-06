@@ -24,10 +24,10 @@ class Event extends Model
     ];
     function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,"category_id");
     }
     function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,"organizer_id");
     }
     function allUsersTakeReservation(){
         return $this->belongsToMany(User::class,"reservation");

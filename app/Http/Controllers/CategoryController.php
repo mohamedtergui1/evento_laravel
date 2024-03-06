@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Repositories\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -10,9 +12,17 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $categoryRepository;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     public function index()
     {
         //
+        $categories = $this->categoryRepository->paginate(10);
+        return view("admin.categories.index",compact("categories"));
     }
 
     /**
@@ -26,9 +36,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         //
+        $this->categoryRepository->create(["name"=>$request->name]);
+        return  redirect()->route("categories.index")->with("success","category created successfuly");
+
     }
 
     /**
@@ -50,9 +63,12 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
         //
+        $this->categoryRepository->update($category,$request->all());
+        return  redirect()->route("categories.index")->with("success","category updated successfuly");
+
     }
 
     /**
