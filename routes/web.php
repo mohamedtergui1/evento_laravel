@@ -3,12 +3,14 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Reservation;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +33,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::middleware('auth')->group(function () {
+    Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/events/reservation/{eventId}', [ProfileController::class, 'eventReservation'])->name('profile.event.reservation');
+    Route::resource('events', 'EventController')->except(['index']);
+    Route::post("/getReservation/{event}",[ReservationController::class , 'getReservation'])->name("getReservation");
 
 });
 
@@ -50,10 +55,13 @@ Route::get("/callback/{provider}", [SocialiteController::class,"callback"])->nam
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('events', [EventController::class,"index"])->name("events.index");
     Route::resources(['users' => UserController::class]);
-    Route::resources(['events' => EventController::class]);
+    Route::put('events/status/{event}', [EventController::class,"changeStatus"])->name("changeStatus");
     Route::resources(['categories' => CategoryController::class]);
 });
+
+
 
 Route::get("/search",[SearchController::class,"search"]);
 

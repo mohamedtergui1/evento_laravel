@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->boolean('status');
+            $table->enum("status",["accepted","rejected","pending"])->default("pending");
+            $table->integer('numberOfTicket');
             $table->foreignId("user_id")->constrained("users");
             $table->foreignId("event_id")->constrained("events");
             $table->timestamps();

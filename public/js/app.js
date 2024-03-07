@@ -37,16 +37,16 @@ $(document).ready(function () {
                 }
             })
             .then(response => {
-                    console.log(response)
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
-                console.log(data)
+                console.log(data.events)
                 if (data.status) {
-                    showProduct(data.products, data.token);
+                    showProduct(data.events, data.token);
                 } else noResult();
             })
             .catch(error => {
@@ -85,6 +85,47 @@ $(document).ready(function () {
         `)
     }
 
+    function showProduct(events, token) {
+        $("#place_result").html("")
+        events.forEach(event => {
+            $("#place_result").append(`
+                <div
+                class="bg-white shadow-[0_8px_12px_-6px_rgba(0,0,0,0.2)] border p-2 w-full max-w-sm rounded-lg font-[sans-serif] overflow-hidden mx-auto mt-4">
+                <img src="https://readymadeui.com/cardImg.webp" class="w-full rounded-lg" />
+                <div class="px-4 my-6 text-center">
+                    <h3 class="text-lg font-semibold">${event.name}</h3>
+                    <p class="mt-2 text-sm text-gray-400">${event.description}</p>
+
+                </div>
+                <div class="flex justify-between  items-center ">
+                    <span>${event.date} </span> <span
+                        class="px-2 py-1 border rounded-sm">${event.category.name}</span>
+                </div>
+                <div class="space-x-10 flex items-center justify-end  pt-4 ">
+                    <span>${event.user.name}</span>
+                    <div class="relative  ">
+                        <img src="https://readymadeui.com/team-6.webp" class="w-14 h-14 rounded-full" />
+                        <span
+                            class="h-3 w-3 rounded-full border border-white bg-green-500 block absolute bottom-1 right-0"></span>
+                    </div>
+
+
+                </div>
+                <div class="mt-4 flex items-center flex-wrap gap-4">
+                    <h3 class="text-xl text-[#333] font-bold flex-1">$ ${event.price}</h3>
+                    <button type="button"
+                        class="px-6 py-2.5 rounded text-[#333] text-sm tracking-wider font-semibold border-2 border-[#333] hover:bg-gray-50 outline-none">Order
+                        now</button>
+                </div>
+
+                <button type="button"
+                    class="px-6 py-2 w-full mt-4 rounded-lg text-white text-sm tracking-wider font-semibold border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">View</button>
+            </div>
+                `);
+
+
+        });
+    }
 
 
 });

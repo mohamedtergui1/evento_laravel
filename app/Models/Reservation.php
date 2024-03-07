@@ -14,6 +14,8 @@ class Reservation extends Model
         "status"
         ,
         "event_id"
+        ,
+        "numberOfTicket"
     ];
     function ticket()
     {

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="flex gap-5 justify-center py-10 flex-wrap">
 
-        <div class="w-96  lg:w-1/3 h-screen h-96 bg-gray-100 px-10 pt-10">
+        <div class="w-96  lg:w-1/3  h-96 bg-gray-100 px-10 pt-10">
             <div class="relative mt-16 mb-32 max-w-sm mx-auto mt-24">
                 <div class="rounded overflow-hidden shadow-md bg-white">
                     <div class="absolute -mt-20 w-full flex justify-center">
@@ -11,10 +11,11 @@
                         </div>
                     </div>
                     <div class="px-6 mt-16">
-                        <h1 class="font-bold text-3xl text-center mb-1">{{auth()->user()->name}}</h1>
+                        <h1 class="font-bold text-3xl text-center mb-1">{{ auth()->user()->name }}</h1>
                         <p class="text-gray-800 text-sm text-center">Chief Executive Officer</p>
                         <p class="text-center text-gray-600 text-base pt-3 font-normal">
-                            Carole Steward is a visionary CEO known for her exceptional leadership and strategic acumen.
+                            Carole Steward is a visionary CEO known for her exceptional leadership and strategic
+                            acumen.
                             With a
                             wealth of experience in the corporate world, she has a proven track record of driving
                             innovation and
@@ -61,52 +62,56 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white lg:w-1/3 w-96 h-96 overflow-hidden shadow rounded-lg border">
-            <div class="px-4 py-5 flex justify-end sm:px-6">
-                <a href="{{route("profile.edit")}}">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.1 1.9-.7-.7m5.6 5.6-.7-.7m-4.2 0-.7.7m5.6-5.6-.7.7M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                  </svg>
-                </a>
+
+            <div class="bg-white lg:w-1/3 w-96 h-96 overflow-hidden shadow rounded-lg border">
+                <div class="px-4 py-5 flex justify-end sm:px-6">
+                    <a href="{{ route('profile.edit') }}">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.1 1.9-.7-.7m5.6 5.6-.7-.7m-4.2 0-.7.7m5.6-5.6-.7.7M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Full name
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{ auth()->user()->name }}
+                            </dd>
+                        </div>
+                        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Email address
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                {{ auth()->user()->email }}
+                            </dd>
+                        </div>
+                        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Phone number
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                (123) 456-7890
+                            </dd>
+                        </div>
+                        <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Address
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                123 Main St<br>
+                                Anytown, USA 12345
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
-            <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                <dl class="sm:divide-y sm:divide-gray-200">
-                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Full name
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            {{auth()->user()->name}}
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Email address
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            {{auth()->user()->email}}
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Phone number
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            (123) 456-7890
-                        </dd>
-                    </div>
-                    <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">
-                            Address
-                        </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            123 Main St<br>
-                            Anytown, USA 12345
-                        </dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
+        
     </div>
 
 
@@ -115,8 +120,8 @@
             <div id="alert-3"
                 class=" lg:m-10 flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
                 role="alert">
-                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    viewBox="0 0 20 20">
+                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
                     <path
                         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
@@ -172,89 +177,96 @@
                 class="ml-2 px-4 py-2 font-medium text-white bg-sky-600 rounded-md hover:bg-sky-500 focus:outline-none focus:shadow-outline-sky active:bg-sky-600 transition duration-150 ease-in-out">Add</button>
         </div>
         <div class="overflow-x-scroll">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">title
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        description
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">capacity
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">rest
-                        places
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">date
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">location
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">price
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">status
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">auto
-                        akcept
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">catrgory
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ($events as $event)
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead>
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->title }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->description }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->capacity }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->rest_places }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->date }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->location }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->price }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @if ($event->status == "accepted")
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">accepted</span>
-                            @endif
-                            @if($event->status == "rejected")
-
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">rejected</span>
-                             @endif
-                             @if($event->status == "pending")
-                             <span
-                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">pending</span>
-                             @endif
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @if ($event->autoAccept)
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">yes</span>
-                            @else
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">no</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->category->name }}</td>
-                        <td class="px-6 py-4 flex justify-around">
-                            <a href="{{route("events.edit",$event->id)}}"
-                                class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">Edit</a>
-                                <form class="flex" action="{{ route("events.destroy", $event->id) }}" method="post">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            title
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            description
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            capacity
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">rest
+                            places
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">date
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            location
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            price
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            status
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">auto
+                            akcept
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            catrgory
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach ($events as $event)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->title }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->description }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->capacity }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->rest_places }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->date }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->location }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->price }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($event->status == 'accepted')
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">accepted</span>
+                                @endif
+                                @if ($event->status == 'rejected')
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">rejected</span>
+                                @endif
+                                @if ($event->status == 'pending')
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">pending</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($event->autoAccept)
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">yes</span>
+                                @else
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">no</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $event->category->name }}</td>
+                            <td class="px-6 py-4 flex justify-around">
+                                <a href="{{ route('events.edit', $event->id) }}"
+                                    class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">Edit</a>
+                                <form class="flex" action="{{ route('events.destroy', $event->id) }}"
+                                    method="post">
                                     @csrf
-                                    @method("DELETE")
-                                    <button onclick="return confurmDelete(event)" type="submit" class="deleteEventBTN ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">Delete</button>
+                                    @method('DELETE')
+
+                                    <button onclick="return confurmDelete(event)" type="submit"
+                                        class="deleteEventBTN ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">Delete</button>
                                 </form>
 
 
-                        </td>
+                            </td>
 
-                    </tr>
+                        </tr>
+                    @endforeach
+                </tbody>
 
-                @endforeach
-            </tbody>
+            </table>
 
-        </table>
-
-    </div>
+        </div>
 
     </div>
 

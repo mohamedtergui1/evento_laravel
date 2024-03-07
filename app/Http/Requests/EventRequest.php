@@ -26,7 +26,7 @@ class EventRequest extends FormRequest
             'description' => 'required|string',
             'capacity' => 'required|integer|min:1',
             'rest_places' => 'integer|min:0|max:capacity',
-            'date' => 'required|date|date:after:+1 day',
+            'date' => 'required|date|after:+1 day',
             'location' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'status' => 'nullable|in:accepted,rejected',

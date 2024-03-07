@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Category;
+use App\Models\Reservation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,4 +65,9 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    function eventReservation(int $eventId ){
+        $reservations = Reservation::where("status" , "pending");
+        dd($reservations);
+     }
 }
