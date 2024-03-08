@@ -20,7 +20,9 @@ class ProfileController extends Controller
         $user= auth()->user();
         $events = $user->events;
         $categories = Category::all();
-        return view("profile",compact("events","categories"));
+        $myReservation = $user->myReservation;
+        
+        return view("profile",compact("events","categories","myReservation"));
     }
     public function edit(Request $request): View
     {
