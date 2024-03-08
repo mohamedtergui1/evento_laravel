@@ -22,7 +22,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
+                    <x-nav-link :href="route('AdminIndex')" :active="request()->routeIs('AdminIndex')">
                         {{ __('Events') }}
                     </x-nav-link>
                 </div>

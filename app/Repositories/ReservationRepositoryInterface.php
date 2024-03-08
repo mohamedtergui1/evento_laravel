@@ -15,6 +15,7 @@ interface ReservationRepositoryInterface
     public function getById(int $id);
 
     public function getByUserId(int $id);
+    public function getByEventId(int $id);
 
     public function getAll();
     public function paginate(int $number);

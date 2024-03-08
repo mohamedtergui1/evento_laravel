@@ -8,7 +8,7 @@
 
     </div>
     <div class="flex justify-between  items-center ">
-        <span>{{ substr($event->date, 0, 16) }}</span> <span
+        <span>{{ \Carbon\Carbon::parse($event->date)->format('Y-F-d h:m') }}</span> <span
             class="px-2 py-1 border rounded-sm">{{ $event->category->name }}</span>
     </div>
     <div class="space-x-10 flex items-center justify-end  pt-4 ">

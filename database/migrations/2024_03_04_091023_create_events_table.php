@@ -22,8 +22,8 @@ return new class extends Migration {
             $table->float("price");
             $table->enum("status",["accepted","rejected","pending"])->default("pending");
             $table->boolean("autoAccept")->default(false);
-            $table->foreignId("organizer_id")->constrained("users");
-            $table->foreignId("category_id")->constrained("categories");
+            $table->foreignId("organizer_id")->constrained("users")->cascadeOnDelete();
+            $table->foreignId("category_id")->nullable()->constrained("categories")->onDelete("set null");
             $table->timestamps();
         });
     }

@@ -21,6 +21,9 @@ class ReservationRepository implements ReservationRepositoryInterface
     {
         return $Reservation->delete();
     }
+    public function  getByEventId(int $id){
+        return Reservation::with("user")->where("event_id",$id)->where("status","pending")->get();
+    }
 
     public function getById(int $id)
     {

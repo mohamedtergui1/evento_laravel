@@ -10,7 +10,7 @@ use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Event;
-use App\Models\Reservation;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,44 +25,49 @@ use App\Models\Reservation;
 
 Route::get('/', function () {
     $categories = Category::all();
-    $events = Event::where("status","accepted")->paginate(10);
+    $events = Event::where("status", "accepted")->paginate(10);
 
-    return view('welcome',compact("events","categories"));
+    return view('welcome', compact("events", "categories"));
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-    Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
+
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/events/reservation/{eventId}', [ProfileController::class, 'eventReservation'])->name('profile.event.reservation');
-    Route::resource('events', 'EventController')->except(['index']);
-    Route::post("/getReservation/{event}",[ReservationController::class , 'getReservation'])->name("getReservation");
+    Route::post("/getReservation/{event}", [ReservationController::class, 'getReservation'])->name("getReservation");
+
+    Route::resources(['events' => EventController::class]);
+    Route::get("/eventReservation/{event}", [ReservationController::class, 'eventReservation'])->name("eventReservation");
+
+    Route::get("/chnageReservationStatus/{reservation}", [ReservationController::class, 'chnageReservationStatus'])->name("chnageReservationStatus");
+
+
 
 });
 
-# Socialite URLs
+ 
 
-// La page où on présente les liens de redirection vers les providers
+Route::get("/redirect/{provider}", [SocialiteController::class, "redirect"])->name('socialite.redirect');
 
-
-Route::get("/redirect/{provider}", [SocialiteController::class,"redirect"])->name('socialite.redirect');
-
-Route::get("/callback/{provider}", [SocialiteController::class,"callback"])->name('socialite.callback');
+Route::get("/callback/{provider}", [SocialiteController::class, "callback"])->name('socialite.callback');
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('events', [EventController::class,"index"])->name("events.index");
     Route::resources(['users' => UserController::class]);
-    Route::put('events/status/{event}', [EventController::class,"changeStatus"])->name("changeStatus");
+    Route::put('events/status/{event}', [EventController::class, "changeStatus"])->name("changeStatus");
+    Route::put('events/status/{event}', [EventController::class, "changeStatus"])->name("changeStatus");
+    Route::get('Admin/events', [EventController::class, "adminIndex"])->name("AdminIndex");
+
     Route::resources(['categories' => CategoryController::class]);
 });
 
 
 
-Route::get("/search",[SearchController::class,"search"]);
+Route::get("/search", [SearchController::class, "search"]);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

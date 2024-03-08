@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->enum("status",["accepted","rejected","pending"])->default("pending");
             $table->integer('numberOfTicket');
-            $table->foreignId("user_id")->constrained("users");
-            $table->foreignId("event_id")->constrained("events");
+            $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
+            $table->foreignId("event_id")->nullable()->constrained("events")->onDelete("set null");
             $table->timestamps();
         });
     }
