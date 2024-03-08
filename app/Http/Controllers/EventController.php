@@ -19,7 +19,7 @@ class EventController extends Controller
     {
         $this->eventRepository = $eventRepository;
     }
-    public function index()
+    public function adminIndex()
     {
         $events = $this->eventRepository->paginate(10);
         $categories = Category::All();
@@ -43,7 +43,7 @@ class EventController extends Controller
 
         $all = $request->all() + ["organizer_id" => auth()->user()->id];
         $event = $this->eventRepository->create($all);
-        return redirect()->route("events.index")->with("success", "event created successfuly");
+        return redirect()->route("profile.index")->with("success", "event created successfuly");
 
     }
 
@@ -86,7 +86,7 @@ class EventController extends Controller
             $all = $request->all() + ["autoAccept" => 0];
             $event = $this->eventRepository->update($event, $all);
         }
-        return redirect()->route("events.index")->with("success", "event updated successfuly");
+        return redirect()->route("profile.index")->with("success", "event updated successfuly");
 
     }
 
@@ -97,7 +97,7 @@ class EventController extends Controller
     {
         //
         $this->eventRepository->delete($event);
-        return redirect()->route("events.index")->with("success", "event deletes with success");
+        return redirect()->route("profile.index")->with("success", "event deletes with success");
 
     }
     public function changeStatus(Request $request, Event $event)
@@ -110,7 +110,7 @@ class EventController extends Controller
 
 
 
-         return redirect()->route("events.index")->with("success", "event {$request->status}d successfuly");
+         return redirect()->route("AdminIndex")->with("success", "event {$request->status}d successfuly");
 
     }
 }
