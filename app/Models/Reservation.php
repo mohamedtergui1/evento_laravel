@@ -21,5 +21,13 @@ class Reservation extends Model
     {
         return $this->hasOne(Reservation::class);
     }
+    function user()
+    {
+        return $this->belongsTo(User::class,"user_id");
+    }
+    function event()
+    {
+        return $this->belongsTo(Event::class,"event_id");
+    }
 }
 
