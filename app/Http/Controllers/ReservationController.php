@@ -18,17 +18,13 @@ class ReservationController extends Controller
     {
         $this->reservationRepository = $reservationRepository;
     }
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    function eventReservation(Event $event)
     {
-        //
+        $reservation = $this->reservationRepository->getByEventId($event->id);
+
+        return view("singlePageReservation",compact("reservation"));
+
     }
 
     /**
@@ -67,32 +63,16 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Reservation $reservation)
-    {
-        //
+    function chnageReservationStatus(Request $request, Reservation $reservation){
+            $request->validate([
+                "status" => "in:accepted,rejected"
+            ]);
+
+            $this->reservationRepository->update($reservation,[
+                "status" => $request->status
+            ]);
+
+            return back()->with("succes","the, status {$request->status} successfuly");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
-    }
 }
