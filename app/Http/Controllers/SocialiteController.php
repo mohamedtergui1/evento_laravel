@@ -43,7 +43,9 @@ class SocialiteController extends Controller
 
             $existingUser = User::where("email", $user["email"])->first();
             if ($existingUser) {
-                Auth::login($existingUser);
+               if($existingUser->status)
+                    Auth::login($existingUser);
+                else return redirect(route("login"))->with("error","Your account has been banned ⛔");
             } else {
                 $password = bin2hex(random_bytes(6)); // Generate a random password
                 $authUser = User::create([

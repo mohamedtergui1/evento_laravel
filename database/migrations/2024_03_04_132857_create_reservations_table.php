@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('numberOfTicket');
             $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
             $table->foreignId("event_id")->nullable()->constrained("events")->onDelete("set null");
+            $table->boolean("itsPaid")->default(false);
             $table->timestamps();
         });
     }

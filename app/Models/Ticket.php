@@ -13,6 +13,6 @@ class Ticket extends Model
     ];
 
     function reservation(){
-        return $this->hasOne(Reservation::class);
+        return $this->belongsTo(Reservation::class);
     }
 }

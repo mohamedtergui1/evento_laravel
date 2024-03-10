@@ -40,8 +40,18 @@ class EventController extends Controller
     public function store(EventRequest $request)
     {
         //
-
         $all = $request->all() + ["organizer_id" => auth()->user()->id];
+        if($request->hasFile("image")){
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time().'.'.$extension;
+            $path = 'uploads/events/';
+            $file->move($path, $fileName);
+            $all["image"] = $fileName;
+        }
+
+
+
         $event = $this->eventRepository->create($all);
         return redirect()->route("profile.index")->with("success", "event created successfuly");
 

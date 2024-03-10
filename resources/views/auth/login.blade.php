@@ -52,7 +52,7 @@
                 style="background-image:url('https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80')">
             </div>
             <form method="post" action="{{ route('login') }}" class="w-full p-8 lg:w-1/2">
-                <h2 class="text-2xl font-semibold text-gray-700 text-center">EVENTO</h2>
+                <div class=" flex justify-center  "><x-application-logo/></div>
                 <p class="text-xl text-gray-600 text-center">Welcome back!</p>
 
                 <a href="{{ route('socialite.redirect', 'google') }}"
@@ -81,23 +81,7 @@
                     <a href="#" class="text-xs text-center text-gray-500 uppercase">or login with email</a>
                     <span class="border-b w-1/5 lg:w-1/4"></span>
                 </div>
-                @if ($errors->any())
-
-                 <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                    <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                    </svg>
-                    <span class="sr-only">Danger</span>
-                    <div>
-                      <span class="font-medium">Ensure !!</span>
-                        <ul class="mt-1.5 list-disc list-inside">
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                      </ul>
-                    </div>
-                  </div>
-                  @endif
+                 <x-alert />
                 @csrf
                 <div class="mt-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
@@ -108,7 +92,9 @@
                 <div class="mt-4">
                     <div class="flex justify-between">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                        <a href="#" class="text-xs text-gray-500">Forget Password?</a>
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                            {{ __('Forgot your password?') }}
+                        </a>
                     </div>
                     <input name="password"
                         class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"

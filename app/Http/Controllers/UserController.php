@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
-
+use Illuminate\Http\Request;
 
 
 class UserController extends Controller
@@ -30,6 +31,17 @@ class UserController extends Controller
     public function create()
     {
         //
+    }
+    function changeUserStatus( Request $re , User $user){
+        if($user->status){
+         $user->status = 0;
+         $user->save();
+            return  redirect(route("users.index"))->with("success","user block successfuly");}
+        else {
+            $user->status = 1;
+         $user->save();
+           return   redirect(route("users.index"))->with("success","user unblock successfuly");
+        }
     }
 
     /**

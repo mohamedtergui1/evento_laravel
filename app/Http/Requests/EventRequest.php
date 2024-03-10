@@ -30,7 +30,8 @@ class EventRequest extends FormRequest
             'location' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'status' => 'nullable|in:accepted,rejected',
-            'autoAccept' => 'nullable|boolean'
+            'autoAccept' => 'nullable|boolean',
+            'image' => 'required|mimes:png,jpeg,jpg,webp'
         ];
 
 

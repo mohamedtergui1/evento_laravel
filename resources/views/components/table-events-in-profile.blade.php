@@ -1,4 +1,4 @@
-<div  class="pt-20 flex justify-center  text-center text-3xl" >
+<div class="pt-20 flex justify-center  text-center text-3xl">
     <h2> manage your events </h2>
 </div>
 
@@ -81,8 +81,7 @@
                                 class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">show</a>
                             <a href="{{ route('events.edit', $event->id) }}"
                                 class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">Edit</a>
-                            <form class="flex" action="{{ route('events.destroy', $event->id) }}"
-                                method="post">
+                            <form class="flex" action="{{ route('events.destroy', $event->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
 

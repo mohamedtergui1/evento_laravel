@@ -20,7 +20,8 @@ class Event extends Model
         'location',
         'autoAccept',
         'capacity',
-        'rest_places'
+        'rest_places',
+        "image"
     ];
     function category()
     {

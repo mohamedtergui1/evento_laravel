@@ -1,10 +1,12 @@
 @foreach ($events as $event)
 <div
+
     class="bg-white shadow-[0_8px_12px_-6px_rgba(0,0,0,0.2)] border p-2    w-96 rounded-lg font-[sans-serif] overflow-hidden m-2 mt-4">
-    <img src="https://readymadeui.com/cardImg.webp" class="w-full rounded-lg" />
+    <img src="{{asset("/uploads/events/{$event->image}")}}" class="w-full h-56 rounded-lg" />
+    <h1>{{$event->id}}</h1>
     <div class="px-4 my-6 text-center">
-        <h3 class="text-lg font-semibold">{{ $event->title }}</h3>
-        <p class="mt-2 text-sm text-gray-400">{{ $event->description }}</p>
+        <h3 class="text-lg font-semibold">{{ Str::limit($event->title, 20, '...')}}</h3>
+        <p class="mt-2 text-sm text-gray-400">{{Str::limit($event->description, 80, '...')  }}</p>
 
     </div>
     <div class="flex justify-between  items-center ">
@@ -22,6 +24,7 @@
     </div>
     <div class="mt-4 flex items-center flex-wrap gap-4">
         <h3 class="text-xl text-[#333] font-bold flex-1">$ {{ $event->price }}</h3>
+        @auth
         <form method="post" class="flex gap-1 " action="{{ route('getReservation', $event->id) }}">
             @csrf
             <div class="w-32">
@@ -35,7 +38,7 @@
                                 d="M1 1h16" />
                         </svg>
                     </button>
-                    <input name="numberOfTicket" value="1" type="text" id="quantity-input{{ $event->id }}" data-input-counter
+                    <input max="4" min="1" name="numberOfTicket" value="1" type="number" id="quantity-input{{ $event->id }}" data-input-counter
                         aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="2" required />
@@ -51,11 +54,16 @@
                 </div>
 
             </div>
-            <button
+
+                 <button
                 class="px-6 py-2.5 rounded text-[#333] text-sm tracking-wider font-semibold border-2 border-[#333] hover:bg-gray-50 outline-none">Order
                 now</button>
-        </form>
 
+
+        </form>
+            @else
+                        <a href="{{route("login")}}"  class="px-6 py-2.5 rounded text-[#333] text-sm tracking-wider font-semibold border-2 border-[#333] hover:bg-gray-50 outline-none" >login to get ticket</a>
+                        @endauth
     </div>
 
     <button type="button"
@@ -69,8 +77,5 @@
             its empty
         </p>
     </div>
-@else
-    <div class="flex p-5 pb-10 justify-end">
-        {{ $events->links() }}
-    </div>
+
 @endif

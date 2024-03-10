@@ -32,13 +32,17 @@
                             </td>
                             <td class="  flex justify-start gap-1 px-6 py-4">
                                 @if ($reservation->status=="pending")
-                                            <form action="{{route("chnageReservationStatus",$reservation->id)}}">
+                                            <form method="POST" action="{{route("chnageReservationStatus",$reservation->id)}}">
+                                                @csrf
+                                                @method("PUT")
                                                 <input type="hidden"  name="status" value="accepted" >
                                                 <button class="px-2 py-1 rounded text-white bg-blue-500" >
                                                     accepte
                                                 </button>
                                             </form>
-                                            <form action="{{route("chnageReservationStatus",$reservation->id)}}">
+                                            <form method="POST" action="{{route("chnageReservationStatus",$reservation->id)}}">
+                                                @csrf
+                                                @method("PUT")
                                                 <input type="hidden"  name="status" value="rejected" >
 
                                                 <button  class="px-2 py-1 text-white rounded bg-red-500" >rejecte</button>

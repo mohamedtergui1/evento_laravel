@@ -2,15 +2,17 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Event;
-
+use App\Models\Ticket;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ use App\Models\Event;
 
 Route::get('/', function () {
     $categories = Category::all();
-    $events = Event::where("status", "accepted")->paginate(10);
+    $events = Event::where("status", "accepted")->latest()->paginate(6);
 
     return view('welcome', compact("events", "categories"));
 });
@@ -44,13 +46,18 @@ Route::middleware('auth')->group(function () {
     Route::resources(['events' => EventController::class]);
     Route::get("/eventReservation/{event}", [ReservationController::class, 'eventReservation'])->name("eventReservation");
 
-    Route::get("/chnageReservationStatus/{reservation}", [ReservationController::class, 'chnageReservationStatus'])->name("chnageReservationStatus");
+    Route::put("/chnageReservationStatus/{reservation}", [ReservationController::class, 'chnageReservationStatus'])->name("chnageReservationStatus");
+    Route::post("/EVENTPayment", [PaymentController::class, 'preparePayment'])->name("checkout");
+    Route::get("/paymentSuccess", [PaymentController::class, 'paymentSuccess'])->name("payment.success");
+    Route::get("/generateTicket/{reservation}", [TicketController::class, 'generateTicket'])->name("generateTicket");
+
+
 
 
 
 });
 
- 
+
 
 Route::get("/redirect/{provider}", [SocialiteController::class, "redirect"])->name('socialite.redirect');
 
@@ -62,6 +69,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('events/status/{event}', [EventController::class, "changeStatus"])->name("changeStatus");
     Route::put('events/status/{event}', [EventController::class, "changeStatus"])->name("changeStatus");
     Route::get('Admin/events', [EventController::class, "adminIndex"])->name("AdminIndex");
+    Route::put('changeUserStatus/{user}', [UserController::class, "changeUserStatus"])->name("changeUserStatus");
+
+
 
     Route::resources(['categories' => CategoryController::class]);
 });
@@ -69,5 +79,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 Route::get("/search", [SearchController::class, "search"]);
+// Route::get("/moreData", [SearchController::class, "moreData"]);
 
 require __DIR__ . '/auth.php';

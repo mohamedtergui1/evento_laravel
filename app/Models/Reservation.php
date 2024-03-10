@@ -19,7 +19,7 @@ class Reservation extends Model
     ];
     function ticket()
     {
-        return $this->hasOne(Reservation::class);
+        return $this->hasMany(Reservation::class);
     }
     function user()
     {

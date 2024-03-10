@@ -48,6 +48,14 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
+          $user = Auth::user();
+        if (  !$user->status) {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'email' => trans('Your account has been banned ⛔'),
+            ]);
+        }
 
         RateLimiter::clear($this->throttleKey());
     }

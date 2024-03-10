@@ -45,13 +45,23 @@
                                 {{$reservation->status}}
                             </td>
                             <td class="  flex justify-start gap-1 px-6 py-4">
-                                    @if($reservation->status == "accepted")
-                                        <form action="">
+                                    @if($reservation->status == "accepted" && !$reservation->itsPaid)
+                                        <form method="POST" action="{{route('checkout')}}">
+                                            @csrf
+                                            <input  type="hidden" name="reservation_id"  value="{{$reservation->id}}" >
                                             <button  class="px-2 py-1 rounded-md text-white  bg-blue-500" >checkout</button>
                                         </form>
-                                    @else
 
+                                    @endif
+                                    @if(!$reservation->itsPaid && $reservation->status == "pending" )
                                     <button disabled  class="px-2 py-1 rounded-md text-white bg-blue-800" >checkout</button>
+                                    @endif
+
+                                    @if($reservation->itsPaid)
+                                      <span   class="px-2 py-1 bg-green-500 rounded-lg text-white" >paid</span>
+
+                                        <a href="{{route('generateTicket',$reservation->id)}}" target="_blank" class="px-2 py-1 bg-blue-500 rounded-lg text-white"  >download ticket</a>
+
                                     @endif
 
                             </td>
