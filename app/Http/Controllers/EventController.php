@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\Category;
 use App\Repositories\EventRepositoryInterface;
@@ -41,10 +42,10 @@ class EventController extends Controller
     {
         //
         $all = $request->all() + ["organizer_id" => auth()->user()->id];
-        if($request->hasFile("image")){
+        if ($request->hasFile("image")) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
-            $fileName = time().'.'.$extension;
+            $fileName = time() . '.' . $extension;
             $path = 'uploads/events/';
             $file->move($path, $fileName);
             $all["image"] = $fileName;
@@ -62,7 +63,9 @@ class EventController extends Controller
      */
     public function show(int $id)
     {
-        //
+        $event = $this->eventRepository->getById($id);
+
+        return view("singlePageEvent", compact("event"));
 
     }
 
@@ -83,17 +86,28 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event)
     {
         //
+        $all = $request->all();
+        if(empty($all["image"])) unset($all["image"]);
+
+        else if ($request->hasFile("image")) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/events/';
+            $file->move($path, $fileName);
+            $all["image"] = $fileName;
+        }
 
         if ($request->autoAccept) {
-            $event = $this->eventRepository->update($event, $request->all());
+            $event = $this->eventRepository->update($event, $all);
 
 
 
         } else {
-            $all = $request->all() + ["autoAccept" => 0];
+            $all += ["autoAccept" => 0];
             $event = $this->eventRepository->update($event, $all);
         }
         return redirect()->route("profile.index")->with("success", "event updated successfuly");
@@ -115,12 +129,13 @@ class EventController extends Controller
 
 
 
-            $event = $this->eventRepository->update($event, [
-                 "status" =>  $request->status ]);
+        $event = $this->eventRepository->update($event, [
+            "status" => $request->status
+        ]);
 
 
 
-         return redirect()->route("AdminIndex")->with("success", "event {$request->status}d successfuly");
+        return redirect()->route("AdminIndex")->with("success", "event {$request->status}d successfuly");
 
     }
 }

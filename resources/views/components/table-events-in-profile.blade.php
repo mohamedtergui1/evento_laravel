@@ -78,7 +78,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->category->name }}</td>
                         <td class="px-6 py-4 flex justify-around">
                             <a href="{{ route('eventReservation', $event->id) }}"
-                                class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">show</a>
+                                class="px-4 py-2 font-medium text-white bg-sky-600 mr-1 rounded-md hover:bg-sky-500 focus:outline-none focus:shadow-outline-sky active:bg-sky-600 transition duration-150 ease-in-out">show</a>
                             <a href="{{ route('events.edit', $event->id) }}"
                                 class="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">Edit</a>
                             <form class="flex" action="{{ route('events.destroy', $event->id) }}" method="post">

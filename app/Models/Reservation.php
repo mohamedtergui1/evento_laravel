@@ -17,9 +17,9 @@ class Reservation extends Model
         ,
         "numberOfTicket"
     ];
-    function ticket()
+    function tickets()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Ticket::class);
     }
     function user()
     {

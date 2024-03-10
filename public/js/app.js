@@ -63,15 +63,21 @@ $(document).ready(function () {
         for (let i = 0; i < 6; i++) $("#place_result").append(loader);
     }
     function hideLoaders() {
-        $(".loaderCart").each(function (index) {
+
+        setTimeout(function (){
+             $(".loaderCart").each(function (index) {
             $(this).remove();
         });
+        },1000)
+
     }
 
     document
         .getElementById("search_input")
         .addEventListener("input", fetchData);
     document.getElementById("category").addEventListener("change", fetchData);
+    document.getElementById("endDate").addEventListener("input", fetchData);
+    document.getElementById("startDate").addEventListener("input", fetchData);
 
     function fetchData() {
         var search_string = document.getElementById("search_input").value;
@@ -106,12 +112,13 @@ $(document).ready(function () {
             })
             .then((data) => {
                 console.log(data);
+                hideLoaders();
                 if (data.status) {
                     $("#place_result").html("");
                     showEvent(data.events.data, data.token);
                     current_page = data.events.current_page;
                 } else noResult();
-                hideLoaders();
+
             })
             .catch((error) => {
                 console.error("Fetch Error:", error);
@@ -131,7 +138,7 @@ $(document).ready(function () {
             category: category,
             startDate: startDate,
             endDate: endDate,
-            page: current_page,
+            page: current_page + 1,
         }).toString();
         sholoadersearch();
         fetch("/search?" + params, {
@@ -148,13 +155,15 @@ $(document).ready(function () {
                 return response.json();
             })
             .then((data) => {
+
                 console.log(data);
+                hideLoaders();
                 if (data.status) {
                     showEvent(data.events.data, data.token);
                     current_page++;
                     console.log(current_page);
                 }
-                hideLoaders();
+
             })
             .catch((error) => {
                 console.error("Fetch Error:", error);
@@ -179,7 +188,7 @@ $(document).ready(function () {
         var distanceToBottom = totalHeight - (scrollTop + windowHeight);
 
         if (distanceToBottom < 50) {
-            moreData(current_page + 1);
+            moreData();
         }
     });
     function showEvent(events, token) {
@@ -216,12 +225,12 @@ $(document).ready(function () {
             <div class="mt-4 flex items-center flex-wrap gap-4">
                 <h3 class="text-xl text-[#333] font-bold flex-1">$ ${ event.price }</h3>
 
-                <form method="post" class="flex gap-1 " action="{{ route('getReservation', $event->id) }}">
+                <form method="post" class="flex gap-1 " action="http://127.0.0.1:8000/getReservation${event.id}">
                       <input name="_token" value="${token}" type="hidden">
                     <div class="w-32">
                         <div class="relative flex items-center max-w-[8rem]">
                             <button type="button" id="decrement-button"
-                                data-input-counter-decrement="quantity-input{{ $event->id }}"
+                                data-input-counter-decrement="quantity-input${event.id}"
                                 class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                                 <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
@@ -246,9 +255,9 @@ $(document).ready(function () {
 
                     </div>
 
-                         <button
+                         <a href="http://127.0.0.1:8000/event/${event.id}"
                         class="px-6 py-2.5 rounded text-[#333] text-sm tracking-wider font-semibold border-2 border-[#333] hover:bg-gray-50 outline-none">Order
-                        now</button>
+                        now</a>
 
 
                 </form>

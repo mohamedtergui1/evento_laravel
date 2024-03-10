@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Ticket;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,7 @@ Route::get('/', function () {
     return view('welcome', compact("events", "categories"));
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -71,12 +70,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('Admin/events', [EventController::class, "adminIndex"])->name("AdminIndex");
     Route::put('changeUserStatus/{user}', [UserController::class, "changeUserStatus"])->name("changeUserStatus");
 
+    Route::get('/dashboard', function () {
+        $userCount =User::Count();
+        $eventCount =Event::Count();
+        $categoryCount =Category::Count();
 
+        return view('dashboard',compact("userCount","eventCount","categoryCount"));
+    })->name('dashboard');
 
     Route::resources(['categories' => CategoryController::class]);
 });
 
-
+Route::get("event/{id}",[EventController::class,"show"])->name("events.read");
 
 Route::get("/search", [SearchController::class, "search"]);
 // Route::get("/moreData", [SearchController::class, "moreData"]);

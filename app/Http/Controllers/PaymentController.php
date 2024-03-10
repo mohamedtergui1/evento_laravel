@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Payment;
+use App\Models\Ticket;
 use App\Repositories\EventRepositoryInterface;
 use App\Repositories\ReservationRepositoryInterface;
 use Illuminate\Http\Request;
@@ -69,6 +70,9 @@ class PaymentController extends Controller
             $event =  $reservation->event;
             $event->rest_places -= $reservation->numberOfTicket;
             $event->save();
+            for($i=0;$i<$reservation->numberOfTicket;$i++)  Ticket::create([
+                'reservation_id' => $reservation_id
+            ]);
 
 
             session()->forget('paymentId');

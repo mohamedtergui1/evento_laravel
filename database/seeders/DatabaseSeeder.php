@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
         $a = ["a.jpg","b.jpg","c.jpeg","d.jpg","e.jpg","f.png","j.webp","n.jpeg","t.webp","x.jpg","z.jpg"];
-        for ($x = 0; $x < 100; $x++) {
+        for ($x = 0; $x < 1000; $x++) {
             Event::create([
                 'title' => $faker->sentence(4),
                 'image' => $a[rand(0, count($a) - 1)],
@@ -53,8 +53,8 @@ class DatabaseSeeder extends Seeder
                 'price' => $faker->randomFloat(2, 10, 1000),
                 'status' => $faker->randomElement(['accepted', 'rejected', 'pending']),
                 'autoAccept' => $faker->boolean(),
-                'organizer_id' => User::inRandomOrder()->first()->id, // Assign a random user as organizer
-                'category_id' => Category::inRandomOrder()->first()->id, // Assign a random category
+                'organizer_id' => User::inRandomOrder()->first()->id,
+                'category_id' => Category::inRandomOrder()->first()->id,  
             ]);
         }
     }

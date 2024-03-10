@@ -3,7 +3,7 @@
 
     class="bg-white shadow-[0_8px_12px_-6px_rgba(0,0,0,0.2)] border p-2    w-96 rounded-lg font-[sans-serif] overflow-hidden m-2 mt-4">
     <img src="{{asset("/uploads/events/{$event->image}")}}" class="w-full h-56 rounded-lg" />
-    <h1>{{$event->id}}</h1>
+
     <div class="px-4 my-6 text-center">
         <h3 class="text-lg font-semibold">{{ Str::limit($event->title, 20, '...')}}</h3>
         <p class="mt-2 text-sm text-gray-400">{{Str::limit($event->description, 80, '...')  }}</p>
@@ -66,8 +66,8 @@
                         @endauth
     </div>
 
-    <button type="button"
-        class="px-6 py-2 w-full mt-4 rounded-lg text-white text-sm tracking-wider font-semibold border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">View</button>
+    <a type="button" href="{{route("events.read",$event->id)}}"
+        class="px-6 py-2 w-full mt-4 text-center rounded-lg text-white text-sm tracking-wider font-semibold border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">View</a>
 
 </div>
 @endforeach
