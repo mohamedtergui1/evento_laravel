@@ -33,7 +33,7 @@ class Event extends Model
     function allUsersTakeReservation(){
         return $this->belongsToMany(User::class,"reservation");
     }
-    function reservation(){
+    function reservations(){
         return $this->hasMany(Reservation::class);
     }
 

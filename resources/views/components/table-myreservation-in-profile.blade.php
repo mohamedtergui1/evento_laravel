@@ -1,5 +1,5 @@
 <div  class="pt-20 flex justify-center  text-center text-3xl" >
-    <h2> manage your reservation </h2>
+    <h2  class="text-4xl py-10 font-bold " >my reservation </h2>
 </div>
 
 <div class="relative overflow-x-auto">

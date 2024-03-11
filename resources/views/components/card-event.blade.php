@@ -16,7 +16,7 @@
     <div class="space-x-10 flex items-center justify-end  pt-4 ">
         <span>{{ $event->user->name }}</span>
         <div class="relative  ">
-            <img src="https://readymadeui.com/team-6.webp" class="w-14 h-14 rounded-full" />
+            <img src="{{asset("uploads/users/{$event->user->image}")}}" class="w-14 h-14 rounded-full" />
             <span class="h-3 w-3 rounded-full border border-white bg-green-500 block absolute bottom-1 right-0"></span>
         </div>
 

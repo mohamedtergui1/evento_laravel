@@ -16,7 +16,7 @@
 
                         </div>
                         <!-- Modal body -->
-                        <form action="{{ route('events.update', $event->id) }}" method="post" class="p-4 md:p-5">
+                        <form action="{{ route('events.update', $event->id) }}" method="post" class="p-4 md:p-5"    enctype="multipart/form-data" >
                             @csrf
                             @method('PUT')
                             <div class="grid gap-4 mb-4 grid-cols-2">

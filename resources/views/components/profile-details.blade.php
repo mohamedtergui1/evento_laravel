@@ -3,7 +3,7 @@
         <div class="rounded overflow-hidden shadow-md bg-white">
             <div class="absolute -mt-20 w-full flex justify-center">
                 <div class="h-32 w-32">
-                    <img src="https://randomuser.me/api/portraits/women/49.jpg"
+                    <img src="{{asset("uploads/users/".auth()->user()->image)}}"
                         class="rounded-full object-cover h-full w-full shadow-md" />
                 </div>
             </div>
@@ -61,7 +61,18 @@
 </div>
 
 <div class="bg-white lg:w-1/3 w-96 h-96 overflow-hidden shadow rounded-lg border">
-    <div class="px-4 py-5 flex justify-end sm:px-6">
+    <div class="px-4 py-5 flex gap-5 justify-end sm:px-6">
+        <form method="post" action="{{route("changeRole")}}">
+            @csrf
+            @method("PUT")
+            <button  class="bg-blue-500 px-2 py-1 rounded-md text-white" >
+                @role("user")
+                    Mode Organizer
+                @else
+                Mode User
+                @endrole
+            </button>
+        </form>
         <a href="{{ route('profile.edit') }}">
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

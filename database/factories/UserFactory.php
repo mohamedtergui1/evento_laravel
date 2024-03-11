@@ -23,7 +23,9 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $userImage = ["adnan.jpg","ayman.jpg","bilal.jpg","bolbola.jpg","elaarab.jpg","elkhaili.jpg","elmorjani.jpg","ghofran.jpg","lhcen.jpg","li9ama.jpg","ossama.jpg" ,"smail.jpg","soulaiman.jpg","waheli.jpg","wissal.jpg","yassin.jpg","yassirAit.jpg" ,"zaid.jpg" ,"zehra.jpg" ];
         return [
+            'image' => $userImage[rand(0, count($userImage) - 1)],
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

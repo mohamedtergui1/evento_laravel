@@ -14,6 +14,22 @@ function confurmDelete(e) {
         }
     });
 }
+function previewImageUser(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+        const img = document.getElementById("imagePreview");
+        img.src = reader.result;
+    };
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+function submitUpdateImageUser(){
+    $("#updateImageForm").submit();
+}
 
 function previewImage(event) {
     var input = event.target;
@@ -63,13 +79,11 @@ $(document).ready(function () {
         for (let i = 0; i < 6; i++) $("#place_result").append(loader);
     }
     function hideLoaders() {
-
-        setTimeout(function (){
-             $(".loaderCart").each(function (index) {
-            $(this).remove();
-        });
-        },1000)
-
+        setTimeout(function () {
+            $(".loaderCart").each(function (index) {
+                $(this).remove();
+            });
+        }, 1000);
     }
 
     document
@@ -118,7 +132,6 @@ $(document).ready(function () {
                     showEvent(data.events.data, data.token);
                     current_page = data.events.current_page;
                 } else noResult();
-
             })
             .catch((error) => {
                 console.error("Fetch Error:", error);
@@ -155,7 +168,6 @@ $(document).ready(function () {
                 return response.json();
             })
             .then((data) => {
-
                 console.log(data);
                 hideLoaders();
                 if (data.status) {
@@ -163,7 +175,6 @@ $(document).ready(function () {
                     current_page++;
                     console.log(current_page);
                 }
-
             })
             .catch((error) => {
                 console.error("Fetch Error:", error);
@@ -216,16 +227,16 @@ $(document).ready(function () {
             <div class="space-x-10 flex items-center justify-end  pt-4 ">
                 <span>${event.user.name}</span>
                 <div class="relative  ">
-                    <img src="https://readymadeui.com/team-6.webp" class="w-14 h-14 rounded-full" />
+                    <img src="http://127.0.0.1:8000/uploads/users/${event.user.image}" class="w-14 h-14 rounded-full" />
                     <span class="h-3 w-3 rounded-full border border-white bg-green-500 block absolute bottom-1 right-0"></span>
                 </div>
 
 
             </div>
             <div class="mt-4 flex items-center flex-wrap gap-4">
-                <h3 class="text-xl text-[#333] font-bold flex-1">$ ${ event.price }</h3>
+                <h3 class="text-xl text-[#333] font-bold flex-1">$ ${event.price}</h3>
 
-                <form method="post" class="flex gap-1 " action="http://127.0.0.1:8000/getReservation${event.id}">
+                <form method="post" class="flex gap-1 " action="http://127.0.0.1:8000/getReservation/${event.id}">
                       <input name="_token" value="${token}" type="hidden">
                     <div class="w-32">
                         <div class="relative flex items-center max-w-[8rem]">
@@ -255,29 +266,29 @@ $(document).ready(function () {
 
                     </div>
 
-                         <a href="http://127.0.0.1:8000/event/${event.id}"
+                         <button
                         class="px-6 py-2.5 rounded text-[#333] text-sm tracking-wider font-semibold border-2 border-[#333] hover:bg-gray-50 outline-none">Order
-                        now</a>
+                        now</button>
 
 
                 </form>
 
             </div>
 
-            <button type="button"
-                class="px-6 py-2 w-full mt-4 rounded-lg text-white text-sm tracking-wider font-semibold border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">View</button>
+            <a type="button" href="http://127.0.0.1:8000/event/${event.id}"
+                class="px-6 py-2 w-full mt-4 rounded-lg text-center text-white text-sm tracking-wider font-semibold border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">View</a>
 
         </div>
 
 
                 `);
 
-                function limitString(str, maxLength, suffix = '...') {
-                    if (str.length <= maxLength) {
-                        return str;
-                    }
-                    return str.substring(0, maxLength) + suffix;
+            function limitString(str, maxLength, suffix = "...") {
+                if (str.length <= maxLength) {
+                    return str;
                 }
+                return str.substring(0, maxLength) + suffix;
+            }
         });
     }
 });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -40,6 +41,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/addUserImage', [ProfileController::class, 'addUserImage'])->name('profile.addUserImage');
+    Route::put('/addUserImage', [ProfileController::class, 'updateUserImage']);
+    Route::put('/changeRole', [ProfileController::class, 'changeRole'])->name("changeRole");
+
+
+
     Route::post("/getReservation/{event}", [ReservationController::class, 'getReservation'])->name("getReservation");
 
     Route::resources(['events' => EventController::class]);
@@ -49,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::post("/EVENTPayment", [PaymentController::class, 'preparePayment'])->name("checkout");
     Route::get("/paymentSuccess", [PaymentController::class, 'paymentSuccess'])->name("payment.success");
     Route::get("/generateTicket/{reservation}", [TicketController::class, 'generateTicket'])->name("generateTicket");
+
 
 
 
@@ -70,13 +78,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('Admin/events', [EventController::class, "adminIndex"])->name("AdminIndex");
     Route::put('changeUserStatus/{user}', [UserController::class, "changeUserStatus"])->name("changeUserStatus");
 
-    Route::get('/dashboard', function () {
-        $userCount =User::Count();
-        $eventCount =Event::Count();
-        $categoryCount =Category::Count();
-
-        return view('dashboard',compact("userCount","eventCount","categoryCount"));
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class,"index"])->name('dashboard');
 
     Route::resources(['categories' => CategoryController::class]);
 });

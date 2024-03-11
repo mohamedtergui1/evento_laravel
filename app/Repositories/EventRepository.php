@@ -37,6 +37,6 @@ class EventRepository implements EventRepositoryInterface
     }
     public function paginate(int $number)
     {
-        return Event::paginate($number);
+        return Event::latest()->paginate($number);
     }
 }

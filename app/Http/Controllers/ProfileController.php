@@ -21,7 +21,6 @@ class ProfileController extends Controller
         $events = $user->events;
         $categories = Category::all();
         $myReservation = $user->myReservation()->latest()->get();
-
         return view("profile",compact("events","categories","myReservation"));
     }
     public function edit(Request $request): View
@@ -68,8 +67,41 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    function eventReservation(int $eventId ){
-        $reservations = Reservation::where("status" , "pending");
-        dd($reservations);
+    function addUserImage(  ){
+
+
+        return view("addImageUser");
+
      }
+     function updateUserImage(Request $request){
+        $request->validate([
+            'image' => 'nullable|mimes:png,jpeg,jpg,webp'
+        ]);
+        if ($request->hasFile("image")) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/users/';
+            $file->move($path, $fileName);
+            $user = auth()->user();
+            $user->image =  $fileName;
+            $user->save();
+
+            return redirect("/")->with("success" , "image updated successfuly");
+        }
+         return redirect("/")->with("error" , "image not updated ");
+    }
+    function changeRole(Request $request){
+        $user = auth()->user();
+
+        if($user->hasRole("user")){
+            $user->removeRole('user');
+            $user->assignRole("organizer");
+        } else {
+            $user->removeRole("organizer");
+            $user->assignRole("user");
+        }
+
+        return redirect(route("profile.index"))->with("success" , "Role changed successfully.");
+    }
 }

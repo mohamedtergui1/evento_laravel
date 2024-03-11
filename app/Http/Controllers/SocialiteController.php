@@ -47,7 +47,7 @@ class SocialiteController extends Controller
                     Auth::login($existingUser);
                 else return redirect(route("login"))->with("error","Your account has been banned ⛔");
             } else {
-                $password = bin2hex(random_bytes(6)); // Generate a random password
+                $password = bin2hex(random_bytes(6));  
                 $authUser = User::create([
                     'name' => $user["given_name"] . " " . $user["family_name"],
                     'email' => $user["email"],
@@ -56,6 +56,7 @@ class SocialiteController extends Controller
                 $authUser->assignRole("user");
                 event(new Registered($authUser));
                 Auth::login($authUser);
+                return redirect(route("profile.addUserImage"));
             }
 
             return redirect("/");

@@ -45,8 +45,8 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($events as $event)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->title }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->description }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($event->title, 15, '...')  }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($event->description, 30, '...') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->capacity }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->rest_places }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->date }}</td>
