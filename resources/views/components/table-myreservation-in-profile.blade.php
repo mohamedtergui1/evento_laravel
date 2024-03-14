@@ -68,6 +68,11 @@
                         </tr>
             @endforeach
 
+            @if (count($myReservation) == 0)
+            <tr>
+                <td   class="text-red-500 text-xl  text-center py-10" > no reservation  found </td>
+            </tr>
+        @endif
 
         </tbody>
     </table>

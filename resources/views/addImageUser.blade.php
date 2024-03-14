@@ -40,7 +40,7 @@
 
     </div>
 
-
+<div  class="flex justify-center" >
 
     <div class="w-[400px] relative border-2 border-gray-300 border-dashed rounded-lg p-6" id="dropzone">
         <form id="updateImageForm" method="POST" action="" enctype="multipart/form-data" >
@@ -66,5 +66,5 @@
 
 
     </div>
-
+</div>
 </x-guest-layout>

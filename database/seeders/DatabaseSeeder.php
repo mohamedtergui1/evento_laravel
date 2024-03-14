@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
         Role::create(['name' => 'organizer']);
-        $userImage = ["adnan.jpg","ayman.jpg","bilal.jpg","bolbola.jpg","elaarab.jpg","elkhaili.jpg","elmorjani.jpg","ghofran.jpg","lhcen.jpg","li9ama.jpg","ossama.jpg" ,"smail.jpg","soulaiman.jpg","waheli.jpg","wissal.jpg","yassin.jpg","yassirAit.jpg" ,"zaid.jpg" ,"zehra.jpg" ];
+        $userImage = ["adnan.jpg", "ayman.jpg", "bilal.jpg", "bolbola.jpg", "elaarab.jpg", "elkhaili.jpg", "elmorjani.jpg", "ghofran.jpg", "lhcen.jpg", "li9ama.jpg", "ossama.jpg", "smail.jpg", "soulaiman.jpg", "waheli.jpg", "wissal.jpg", "yassin.jpg", "yassirAit.jpg", "zaid.jpg", "zehra.jpg"];
 
         User::factory(20)->create()->each(function ($user) {
             $user->assignRole("user");
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $a = ["a.jpg","b.jpg","c.jpeg","d.jpg","e.jpg","f.png","j.webp","n.jpeg","t.webp","x.jpg","z.jpg"];
+        $a = ["a.jpg", "b.jpg", "c.jpeg", "d.jpg", "e.jpg", "f.png", "j.webp", "n.jpeg", "t.webp", "x.jpg", "z.jpg"];
         for ($x = 0; $x < 2000; $x++) {
             Event::create([
                 'title' => $faker->sentence(4),
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 'capacity' => $faker->numberBetween(1, 100),
                 'date' => $faker->dateTimeBetween('+1 week', '+1 month'),
                 'location' => $faker->address(),
-                'price' => $faker->randomFloat(2, 10, 1000),
+                'price' => $faker->randomFloat(2, 10, 100),
                 'status' => $faker->randomElement(['accepted', 'rejected', 'pending']),
                 'autoAccept' => $faker->boolean(),
                 'organizer_id' => User::inRandomOrder()->first()->id,
@@ -82,11 +82,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt("admin"),
-            "image" =>  $userImage[rand(0, count($userImage) - 1)]
+            "image" => $userImage[rand(0, count($userImage) - 1)]
         ]);
         $user->assignRole("admin");
     }
 
 
-    }
+}
 

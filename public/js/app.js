@@ -27,7 +27,7 @@ function previewImageUser(event) {
         reader.readAsDataURL(file);
     }
 }
-function submitUpdateImageUser(){
+function submitUpdateImageUser() {
     $("#updateImageForm").submit();
 }
 
@@ -90,8 +90,17 @@ $(document).ready(function () {
         .getElementById("search_input")
         .addEventListener("input", fetchData);
     document.getElementById("category").addEventListener("change", fetchData);
-    document.getElementById("endDate").addEventListener("input", fetchData);
-    document.getElementById("startDate").addEventListener("input", fetchData);
+    document.getElementById("endDate").addEventListener("input", function () {
+        if (document.getElementById("startDate").value.trim() !== "") {
+            fetchData();
+        }
+    });
+
+    document.getElementById("startDate").addEventListener("input", function () {
+        if (document.getElementById("endDate").value.trim() !== "") {
+            fetchData();
+        }
+    });
 
     function fetchData() {
         var search_string = document.getElementById("search_input").value;

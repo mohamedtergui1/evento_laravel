@@ -14,7 +14,7 @@ class DashboardController extends Controller
     $eventCount = Event::count();
     $categoryCount = Category::count();
     $categories = Category::all();
-    dd($categories);
+     
     return view('dashboard', compact("userCount", "eventCount", "categoryCount", "categories"));
    }
 }

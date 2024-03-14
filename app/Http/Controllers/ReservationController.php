@@ -23,7 +23,7 @@ class ReservationController extends Controller
     {
         $reservation = $this->reservationRepository->getByEventId($event->id);
 
-        return view("singlePageReservation",compact("reservation"));
+        return view("singlePageReservation", compact("reservation"));
 
     }
 
@@ -37,31 +37,32 @@ class ReservationController extends Controller
             "numberOfTicket" => "required|integer|min:1|max:4"
         ]);
 
- if($event->rest_places>=$request->numberOfTicket){
-    if ($event->autoAccept) {
-        $this->reservationRepository->create([
-            "user_id" => auth()->id()
-            ,
-            "event_id" => $event->id
-            ,
-            "status" => "accepted"
-            ,
-            "numberOfTicket" => $request->numberOfTicket
-        ]);
-        return redirect()->route("profile.index")->with("success", "your resirvation complete");
-    } else {
+        if ($event->rest_places >= $request->numberOfTicket) {
+            if ($event->autoAccept) {
+                $this->reservationRepository->create([
+                    "user_id" => auth()->id()
+                    ,
+                    "event_id" => $event->id
+                    ,
+                    "status" => "accepted"
+                    ,
+                    "numberOfTicket" => $request->numberOfTicket
+                ]);
+                return redirect()->route("profile.index")->with("success", "your resirvation complete");
+            } else {
 
-        $this->reservationRepository->create([
-            "user_id" => auth()->id()
-            ,
-            "event_id" => $event->id
+                $this->reservationRepository->create([
+                    "user_id" => auth()->id()
+                    ,
+                    "event_id" => $event->id
 
-            ,
-            "numberOfTicket" => $request->numberOfTicket
-        ]);
-        return redirect()->back()->with("success", "your reservation  complete  waiting orginazer to accept ");
-    }
- }else return redirect()->back()->with("error", "no more places available");
+                    ,
+                    "numberOfTicket" => $request->numberOfTicket
+                ]);
+                return redirect()->back()->with("success", "your reservation  complete  waiting orginazer to accept ");
+            }
+        } else
+            return redirect()->back()->with("error", "no more places available");
 
 
     }
@@ -69,16 +70,17 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    function chnageReservationStatus(Request $request, Reservation $reservation){
-            $request->validate([
-                "status" => "in:accepted,rejected"
-            ]);
+    function chnageReservationStatus(Request $request, Reservation $reservation)
+    {
+        $request->validate([
+            "status" => "in:accepted,rejected"
+        ]);
 
-            $this->reservationRepository->update($reservation,[
-                "status" => $request->status
-            ]);
+        $this->reservationRepository->update($reservation, [
+            "status" => $request->status
+        ]);
 
-            return back()->with("success","the, status {$request->status} successfuly");
+        return back()->with("success", "the, status {$request->status} successfuly");
     }
 
 }

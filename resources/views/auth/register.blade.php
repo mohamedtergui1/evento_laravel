@@ -57,7 +57,7 @@
              </div>
              <form method="post" action="{{ url('/register') }}" class="w-full p-8 lg:w-1/2">
                  <div class=" flex justify-center  "><x-application-logo/></div>
-                  
+
 
                  <a href="{{ route('socialite.redirect', 'google') }}"
                      class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
@@ -137,7 +137,7 @@
                 </div>
                  <div class="mt-8">
                      <button
-                         class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
+                         class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Register</button>
                  </div>
                  <div class="mt-4 flex items-center justify-between">
                      <span class="border-b w-1/5 md:w-1/4"></span>

@@ -9,7 +9,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 
 // use Barryvdh\DomPDF\Facade\Pdf;
-use PDF;
+
 class TicketController extends Controller
 {
     /**
@@ -17,6 +17,8 @@ class TicketController extends Controller
      */
     function generateTicket(Reservation $reservation)
 {
+
+    $this->authorize('view', $reservation);
     $dompdf = new Dompdf();
 
     // Set options

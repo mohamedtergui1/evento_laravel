@@ -94,6 +94,12 @@
 
                     </tr>
                 @endforeach
+                @if (count($events) == 0)
+                <tr>
+                    <td   class="text-red-500 text-xl  text-center py-10" > no events  found </td>
+                </tr>
+
+            @endif
             </tbody>
 
         </table>

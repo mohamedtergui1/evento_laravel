@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Ticket;
+use App\Notifications\sendTicketToUser;
 use App\Repositories\EventRepositoryInterface;
 use App\Repositories\ReservationRepositoryInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use Mollie\Laravel\Facades\Mollie;
 
@@ -73,13 +76,52 @@ class PaymentController extends Controller
             for($i=0;$i<$reservation->numberOfTicket;$i++)  Ticket::create([
                 'reservation_id' => $reservation_id
             ]);
+            $user=auth()->user();
+
+
+
+
+
+
+
+
+            $dompdf = new Dompdf();
+
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('fontDir', storage_path('fonts/'));
+            $options->set('fontCache', storage_path('fonts/'));
+            $dompdf->setOptions($options);
+
+            $html = view('tickets.ticket', compact("reservation"))->render();
+            $dompdf->loadHtml($html);
+
+            $dompdf->render();
+
+            $pdfFilename = 'ticket_' . uniqid() . '.pdf';
+            $pdfPath = storage_path('app/public/tickets/' . $pdfFilename);
+            $mypath ='tickets/' . $pdfFilename;
+            file_put_contents($pdfPath, $dompdf->output());
+
+
+
+
+
+            if (file_exists($pdfPath)) {
+
+                $user = $reservation->user;
+                $user->notify(new sendTicketToUser($reservation, $mypath));
+
+
+                unlink($pdfPath);
+            }
 
 
             session()->forget('paymentId');
             session()->forget('reservation_id');
-            return redirect(route("profile.index"))->with("success", "Your payment is done with success");
+            return redirect(route("profile.index"))->with('success', 'Your payment is done with success, check your email.');
         } else {
-            return "canceled";
+            return "error";
         }
     }
 
